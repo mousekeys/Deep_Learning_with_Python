@@ -7,17 +7,13 @@ import copy
 #Calculate dimension
 def calc_dimension(screen):
     _,img=screen.read()
-    return (img.shape)
+    return img.shape
+
 
 def main():
-    # Capture resources
-    lion=cv2.VideoCapture('lion_roar_2.mp4') #-- (720, 1280, 3)
+    lion=cv2.VideoCapture('lion_roar_2.mp4')
     cam=cv2.VideoCapture(0) #-- (480, 640, 3)
-
-    #Calculated dimensions
-    w,h,_=calc_dimension(cam) 
-
-    # Setup a range to work the masking magic on
+    w,h,_=calc_dimension(cam) #-- (720, 1280, 3)
     green_rgb = np.array([[[8, 243, 27]]],dtype=np.uint8)
     green_hsv = cv2.cvtColor(green_rgb,cv2.COLOR_RGB2HSV)
     lower_range = np.array([green_hsv[0][0][0]-20,100,100])
@@ -27,12 +23,12 @@ def main():
         key = cv2.waitKey(10)
         if key == 27:  
             break
-    #Intake inputs
+
+
         ret_lion,video=lion.read()
         ret_cam,camera=cam.read()
 
-    #Check if input is received from both input sources
-        if not ret_lion or not ret_cam:
+        if not ret_lion and not ret_cam:
             break
 
     # Preparation for masking root image (IMAGE WITH GREEN BG)
@@ -65,10 +61,11 @@ def main():
     
     #Added both the images into a single one
         final_img=cv2.bitwise_or(temp_img,lion_img_mask)
-        # Show the image
+        
         cv2.imshow('img',final_img)
 
-#Ending releasing resources
+
+
     lion.release()
     cv2.destroyAllWindows()
 
