@@ -11,7 +11,7 @@ def calc_dimension(screen):
 
 
 def main():
-    lion=cv2.VideoCapture('lion_roar_2.mp4')
+    lion=cv2.VideoCapture('./videos/lion_roar_2.mp4')
     cam=cv2.VideoCapture(0) #-- (480, 640, 3)
     w,h,_=calc_dimension(cam) #-- (720, 1280, 3)
     green_rgb = np.array([[[8, 243, 27]]],dtype=np.uint8)
@@ -64,8 +64,7 @@ def main():
         
         cv2.imshow('img',final_img)
 
-
-
+    cam.release()
     lion.release()
     cv2.destroyAllWindows()
 
