@@ -28,7 +28,7 @@ def main():
         ret_lion,video=lion.read()
         ret_cam,camera=cam.read()
 
-        if not ret_lion and not ret_cam:
+        if not ret_lion or not ret_cam:
             break
 
     # Preparation for masking root image (IMAGE WITH GREEN BG)
